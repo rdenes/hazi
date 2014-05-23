@@ -100,8 +100,6 @@ public class Main {
 		ResultSetMetaData rsmd;
 		try {
 			rsmd = rs.getMetaData();
-			if (rsmd == null)
-				logger.debug("Nem sikerült átrakni az rsmd-be.");
 			System.out.println(rsmd.getColumnName(1) + "    "
 					+ rsmd.getColumnName(2) + "       " + rsmd.getColumnName(3)
 					+ "            " + rsmd.getColumnName(4) + "              "
@@ -128,6 +126,7 @@ public class Main {
 				}
 				System.out.println(ora + "      " + tan_i + "   " + tan_sz
 						+ " " + szombat + " " + vasarnap);
+				
 			}
 		} catch (SQLException e) {
 			System.out.println("Nem sikerült a kiírás.");

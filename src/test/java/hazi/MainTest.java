@@ -21,7 +21,7 @@ public class MainTest {
 		if (m.ellenoriz("indit")==1)
 			assertTrue(true);
 	}
-	/*
+	
 	@Test
 	 public void ConnectionTest() {
 		  
@@ -41,7 +41,7 @@ public class MainTest {
 	}	
 	private final ByteArrayOutputStream kiirt = new ByteArrayOutputStream();
 
-	@Before
+	/*@Before
 	public void setUpStreams() {
 	    System.setOut(new PrintStream(kiirt));
 	}
