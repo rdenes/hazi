@@ -42,100 +42,6 @@ public class Main {
 	}
 
 	/**
-	 * Kiépíti a kapcsolatot az sql szerverrel.
-	 * 
-	 * @return az sql kapcsolat.
-	 */
-	public final Connection connect() {
-		logger.info("Metódus:Létrehozzuk a kapcsolatot az sql szerverrel.");
-		try {
-			Connection con = DriverManager.getConnection(
-					"jdbc:oracle:thin:@db.inf.unideb.hu:1521:ora11g",
-					"H_F7Q9VM", "kassai");
-			return con;
-		} catch (SQLException e) {
-			System.out.println("Nem sikerült a kapcsolat.");
-			logger.error("Nem sikerült létrehozni a kapcsolatot.");
-			return null;
-		}
-	}
-
-	/**
-	 * Lekérdezi a megadott busz menetrendjét.
-	 * 
-	 * @param busz
-	 *            A busz aminek a menetrendjét le akarjuk kérdezni.
-	 * 
-	 * @param con
-	 *            A kapcsolat az sql szerverrel.
-	 * 
-	 * @return A busz menetrendje
-	 */
-	public ResultSet lekerdez(String busz, Connection con) {
-		logger.info("Metódus:Lekérdezzük a táblát az sql szervertől.");
-		Statement stmt;
-		try {
-			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT *  FROM " + busz);
-			if (rs != null)
-				logger.debug("Talált ilyen táblát");
-			return rs;
-		} catch (SQLException e) {
-			System.out.println("Nincs ilyen tábla az adatbázisban.");
-			logger.warn("Nincs ilyen tábla az adatbázisban.");
-			return null;
-		}
-	}
-
-	/**
-	 * Kiírja a kimenetre a busz menetrendjét.
-	 * 
-	 * @param rs
-	 *            A busz menetrendje.
-	 * 
-	 */
-	public void kiir(ResultSet rs) {
-		logger.info("Metódus:Kiírjuk a lekérdezett táblát.");
-		String ora, tan_i, tan_sz, szombat, vasarnap;
-		ResultSetMetaData rsmd;
-		try {
-			rsmd = rs.getMetaData();
-			System.out.println(rsmd.getColumnName(1) + "    "
-					+ rsmd.getColumnName(2) + "       " + rsmd.getColumnName(3)
-					+ "            " + rsmd.getColumnName(4) + "              "
-					+ rsmd.getColumnName(5));
-			while (rs.next()) {
-				ora = rs.getString(1);
-				tan_i = rs.getString(2);
-				tan_sz = rs.getString(3);
-				szombat = rs.getString(4);
-				vasarnap = rs.getString(5);
-				if (ora.length() != 2)
-					ora = ora + " ";
-				while (tan_i.length() != 20) {
-					tan_i = tan_i + " ";
-				}
-				while (tan_sz.length() != 20) {
-					tan_sz = tan_sz + " ";
-				}
-				while (szombat.length() != 20) {
-					szombat = szombat + " ";
-				}
-				while (vasarnap.length() != 20) {
-					vasarnap = vasarnap + " ";
-				}
-				System.out.println(ora + "      " + tan_i + "   " + tan_sz
-						+ " " + szombat + " " + vasarnap);
-				
-			}
-		} catch (SQLException e) {
-			System.out.println("Nem sikerült a kiírás.");
-			logger.debug("Nem sikerült kiírni.");
-		}
-
-	}
-
-	/**
 	 * A programot futtató metódus, ami meghívja a többi metódust.
 	 * 
 	 * @throws SQLException
@@ -149,7 +55,10 @@ public class Main {
 		ResultSet rs;
 		Connection con = null;
 		Main m = new Main();
-		con = m.connect();
+		Connect c=new Connect();
+		lekerdez l=new lekerdez();
+		kiir k=new kiir();
+		con = c.connect();
 		while (true) {
 			busz = sc.next();
 			if (busz.equals("vége")) {
@@ -158,9 +67,9 @@ public class Main {
 			}
 
 			if (con != null) {
-				rs = m.lekerdez(busz, con);
+				rs = l.lekerdez(busz, con);
 				if (rs != null)
-					m.kiir(rs);
+					k.kiir(rs);
 			}
 		}
 		if (con != null)

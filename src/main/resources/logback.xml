@@ -34,7 +34,7 @@
 		A gyökér logger mindent naplóz (a konzolra és az állományba
 		is)
 	-->
-	<root level="ALL">
+	<root level="OFF">
 		<appender-ref ref="STDOUT"/>
 		<appender-ref ref="FILE"/>
 	</root>
