@@ -40,6 +40,18 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.30</version>
 		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.1.2</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.2</version>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<filters>
@@ -97,28 +109,7 @@
 			<url>https://code.lds.org/nexus/content/groups/main-repo</url>
 		</repository>
 	</repositories>
-	<profiles>
-		<profile>
-			<id>log</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<dependencies>
-				<dependency>
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-core</artifactId>
-					<version>1.1.2</version>
-					<scope>runtime</scope>
-				</dependency>
-				<dependency>
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-classic</artifactId>
-					<version>1.1.2</version>
-					<scope>runtime</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
+
 	<reporting>
 		<plugins>
 			<plugin>
